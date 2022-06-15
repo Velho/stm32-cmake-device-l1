@@ -48,9 +48,8 @@ target_include_directories (l1-hal
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../CMSIS/Include>)
 
-target_compile_options(l1-hal
+target_compile_options (l1-hal
     PUBLIC
         -mcpu=cortex-m3
         -mthumb)
 
-# target_link_directories (l1-hal INTERFACE l1-cmsis)

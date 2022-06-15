@@ -19,10 +19,7 @@ set (CONTROLLER_SOURCES
     controller/stm32l1xx_it.c
 )
 
-
-# mcpu=cortex-m3
-# thumb
-# set (COMPILE_OPTIONS "")
+# Controller linkage setup.
 
 add_executable (controller.elf ${L1_STARTUP_ASM} ${CONTROLLER_SOURCES})
 
@@ -34,11 +31,7 @@ target_compile_definitions(controller.elf
         STM32L152xE
 )
 
-message ("SOURCE_DIR : ${CMAKE_SOURCE_DIR}")
-
 target_compile_options(controller.elf
-#    PRIVATE
-#        "-T ${CMAKE_SOURCE_DIR}/ldscripts/linker.d"
     PUBLIC
         -mcpu=cortex-m3
         -mthumb)
@@ -47,5 +40,21 @@ target_link_libraries (controller.elf
     PUBLIC
         l1-cmsis
         l1-hal
+)
+
+target_link_libraries (controller.elf
+    PRIVATE
+        uc-cfg
+        uc-lib
+        uc-cpu
+        uc-os3
+)
+
+# OBJCOPY should be part of the arm toolchain.
+add_custom_command (
+    TARGET controller.elf
+    POST_BUILD
+    COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:controller.elf> ${CMAKE_BINARY_DIR}/controller.bin
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
