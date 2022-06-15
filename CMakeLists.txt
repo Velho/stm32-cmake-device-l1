@@ -15,17 +15,21 @@ add_definitions (-DDEBUG)
 add_definitions (-DUSE_HAL_DRIVER)
 add_definitions (-DSTM32L152xE)
 
-
+# Add subdirectories as include paths.
 include_directories (lib/CMSIS/Device/ST/STM32L1xx/Include)
 include_directories (src)
 
-# include libs.
+# ucos-3 include paths project wide.
+include_directories (lib/UCOS3/cfg)
+include_directories (lib/UCOS3/uC-CPU)
+include_directories (lib/UCOS3/uC-LIB)
+include_directories (lib/UCOS3/uC-OS3)
+
+# Library subdirectories
 add_subdirectory (lib/CMSIS)
 add_subdirectory (lib/STM32L1xx_HAL_Driver)
 add_subdirectory (lib/UCOS3)
 
-
+# Add the application.
 add_subdirectory (src)
 
-# JA : Add POST_BUILD command to run the objcopy.
-# arm-none-eabi-objcopy.exe -Oihex .\src\controller.elf controller.hex
