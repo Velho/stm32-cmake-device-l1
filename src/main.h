@@ -32,6 +32,13 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "os_app_hooks.h"
+
+#include <cpu_cfg.h>
+
+#include <cpu.h>
+#include <lib_mem.h>
+#include <os.h>
 
 /* USER CODE END Includes */
 
